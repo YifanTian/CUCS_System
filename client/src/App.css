@@ -164,6 +164,12 @@ img {
   color: #fff;
 }
 
+.btn-landing,
+ {
+  background: var(--primary-color);
+  color: rgb(235, 235, 14);
+}
+
 .btn-light,
 .bg-light,
 .badge-light,

@@ -23,7 +23,8 @@ const Routes = () => {
     <section className='container'>
       <Alert />
       <Switch>
-      <Route exact path='/' component={Landing} />
+      {/* <Route exact path='/' component={Landing} /> */}
+      <Route exact path='/' component={Profiles} />
         <Route exact path="/PhotoBoard" component={PhotoBoardContainer} />
         <Route path="/uploadphoto" component={UploadPhoto} />
         <Route exact path='/register' component={Register} />

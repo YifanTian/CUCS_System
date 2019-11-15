@@ -16,7 +16,8 @@ const Landing = (isAuthenticated) => {
             完善个人信息，加入UCI校友网络
           </p>
           <div className="buttons">
-            <Link to="/register" className="btn btn-primary">Sign Up</Link>
+            <Link to="/profiles" className="btn btn-primary" >稍后注册,先睹为快</Link>
+            <Link to="/register" className="btn btn-light">Sign Up</Link>
             <Link to="/login" className="btn btn-light">Login</Link>
           </div>
         </div>
