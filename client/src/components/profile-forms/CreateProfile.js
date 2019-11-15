@@ -11,7 +11,7 @@ const Createprofile = ({
   history,
 }) => {
   const [formData, setFormData] = useState({
-    company: "",
+    companys: "",
     website: "",
     location: "",
     status: "",
@@ -26,7 +26,7 @@ const Createprofile = ({
   });
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
   const {
-    company,
+    companys,
     website,
     location,
     status,
@@ -79,12 +79,12 @@ const Createprofile = ({
           <input
             type='text'
             placeholder='Company'
-            name='company'
-            value={company}
+            name='companys'
+            value={companys}
             onChange={e => onChange(e)}
           />
           <small className='form-text'>
-            Could be your own company or one you work for
+            Could be your own companys or one you work for
           </small>
         </div>
         <div className='form-group'>
@@ -96,7 +96,7 @@ const Createprofile = ({
             onChange={e => onChange(e)}
           />
           <small className='form-text'>
-            Could be your own or a company website
+            Could be your own or a companys website
           </small>
         </div>
         <div className='form-group'>

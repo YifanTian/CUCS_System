@@ -4,6 +4,7 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+// const img = require('../../models/img');
 
 // @route    GET api/profile/me
 // @desc     Get current users profile
@@ -24,6 +25,14 @@ router.get('/me', auth, async (req, res) => {
     console.error(err.message);
     res.status(500).send('Server Error');
   }
+});
+
+router.get('/getImages', function(req, res){
+  Image.find({}, function(err, data) {
+    console.log("Get all images");
+    if (!err) res.send(data);
+    else throw err;
+  });
 });
 
 module.exports = router;
@@ -52,7 +61,7 @@ router.post(
     }
 
     const {
-      company,
+      companys,
       website,
       location,
       bio,
@@ -66,10 +75,15 @@ router.post(
       linkedin
     } = req.body;
 
+    img_data = fs.readFileSync(req.file.path);
+    img_contentType = req.file.mimetype;
+
     // Build profile object
     const profileFields = {};
     profileFields.user = req.user.id;
-    if (company) profileFields.company = company;
+    if (img_data) profileFields.img.data = img_data;
+    if (img_contentType) profileFields.img.contentType = img_contentType;
+    if (companys) profileFields.companys = companys;
     if (website) profileFields.website = website;
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
@@ -78,6 +92,9 @@ router.post(
     if (skills) {
       profileFields.skills = skills.split(',').map(skill => skill.trim());
     }
+
+    // profileFields.img.data = fs.readFileSync(req.files.userPhoto.path)
+    // profileFields.img.contentType = 'image/png';
 
     // Build social object
     profileFields.social = {};
@@ -106,8 +123,14 @@ router.post(
 // @desc     Get all profiles
 // @access   Public
 router.get('/', async (req, res) => {
+  console.log('try get profile with picture at server');
   try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    // const profiles = await Profile.find().populate('user', ['name', 'avatar','username']);
+    // const profiles = await Profile.find().populate('user', ['name', 'avatar']).populate('img', ['data', 'contentType']);
+    // const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    const profiles = await Profile.find().populate('Image', ['userName','img']).populate('user', ['name', 'avatar']);
+    console.log(profiles);
+
     res.json(profiles);
   } catch (err) {
     console.error(err.message);
@@ -167,7 +190,7 @@ router.put(
       check('title', 'Title is required')
         .not()
         .isEmpty(),
-      check('company', 'Company is required')
+      check('companys', 'Company is required')
         .not()
         .isEmpty(),
       check('from', 'From date is required')
@@ -183,7 +206,7 @@ router.put(
 
     const {
       title,
-      company,
+      companys,
       location,
       from,
       to,
@@ -193,7 +216,7 @@ router.put(
 
     const newExp = {
       title,
-      company,
+      companys,
       location,
       from,
       to,

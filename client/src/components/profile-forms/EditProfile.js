@@ -1,8 +1,76 @@
+// eslint-disable-next-line
 import React, { useEffect, useState, Fragment } from "react";
 import { Link, withRouter, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
+import {FlatButton, Paper, TextField, Divider} from 'material-ui';
+import { reduxForm, Field } from 'redux-form';
+import Dropzone from 'react-dropzone';
+
+const styles = {
+  marginLeft: {
+    marginLeft: 20,
+  },
+  form: {
+    paddingTop: 60,
+    paddingBottom: 50,
+  },
+  paper: {
+
+  }
+}
+
+const imgStyle={
+  width: "50%",
+  height: "auto"
+}
+
+
+const renderDropzoneInput = (field) => {
+  // console.log(field.input.value);
+  let $imagePreview = null;
+  if (field.input.value) {
+    $imagePreview = (<img alt={"previewImg"} style={imgStyle} src={field.input.value[0].preview} />);
+    return (
+      <div className='Aligner'>
+        {$imagePreview}
+      </div>
+    );
+  }
+  else{
+    return (
+      <div className='Aligner'>
+        <Dropzone
+          name={field.name}
+          accept={"image/jpeg, image/png, image/jpg"}
+          onDrop={( filesToUpload, e ) => field.input.onChange(filesToUpload)}
+        >
+          <h2>Try dropping a photo here, or click to select a photo to upload. (ONLY accept png or jpeg)</h2>
+        </Dropzone>
+        {/* {field.meta.touched &&
+          field.meta.error &&
+          <span className="error">{field.meta.error}</span>}
+        {files && Array.isArray(files) && (
+          <ul>
+            { files.map((file, i) => <li key={i}>{file.name}</li>) }
+          </ul>
+        )} */}
+      </div>
+    );
+  }
+}
+
+const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
+  <TextField hintText={label}
+    floatingLabelText={label}
+    underlineShow={false}
+    style={styles.marginLeft}
+    errorText={touched && error}
+    {...input}
+    {...custom}
+  />
+)
 
 const Editprofile = ({
   createProfile,
@@ -11,7 +79,7 @@ const Editprofile = ({
   history,
 }) => {
   const [formData, setFormData] = useState({
-    company: "",
+    companys: "",
     website: "",
     location: "",
     status: "",
@@ -30,7 +98,7 @@ const Editprofile = ({
     getCurrentProfile();
 
     setFormData({
-      company: loading || !profile.company ? '' : profile.company,
+      companys: loading || !profile.companys ? '' : profile.companys,
       website: loading || !profile.website ? '' : profile.website,
       location: loading || !profile.location ? '' : profile.location,
       status: loading || !profile.status ? '' : profile.status,
@@ -47,7 +115,7 @@ const Editprofile = ({
   }, [loading, getCurrentProfile]);
 
   const {
-    company,
+    companys,
     website,
     location,
     status,
@@ -69,8 +137,6 @@ const Editprofile = ({
     createProfile(formData, history, true);
   };
 
-
-
   return loading && profile === null ? (
     <Redirect to='/dashboard' />
   ) : (
@@ -82,6 +148,11 @@ const Editprofile = ({
       </p>
       <small>* = required field</small>
       <form className='form' onSubmit={e => onSubmit(e)}>
+
+          <h1>File Upload</h1>
+          <input type="file" name="myImage" onChange= {e => onChange(e)} />
+          <button type="submit">Upload</button>
+
         <div className='form-group'>
           <select name='status' value={status} onChange={e => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
@@ -102,12 +173,12 @@ const Editprofile = ({
           <input
             type='text'
             placeholder='Company'
-            name='company'
-            value={company}
+            name='companys'
+            value={companys}
             onChange={e => onChange(e)}
           />
           <small className='form-text'>
-            Could be your own company or one you work for
+            Could be your own companys or one you work for
           </small>
         </div>
         <div className='form-group'>
@@ -119,7 +190,7 @@ const Editprofile = ({
             onChange={e => onChange(e)}
           />
           <small className='form-text'>
-            Could be your own or a company website
+            Could be your own or a companys website
           </small>
         </div>
         <div className='form-group'>

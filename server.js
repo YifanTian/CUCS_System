@@ -4,6 +4,8 @@ const path = require('path');
 
 const app = express();
 
+const login = require('./routes/loginRouter');
+
 connectDB();
 
 //Init middleware
@@ -13,6 +15,17 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/auth', require('./routes/api/auth'));
+
+login(app);
+
+// app.use('/api/photos', require('./routes/api/photos'));
+
+
+// app.use(multer({ dest: './uploads/',
+//     rename: function (fieldname, filename) {
+//       return filename;
+//     },
+//    }));
 
 // Serve static in production
 if(process.env.NODE_ENV === 'production'){

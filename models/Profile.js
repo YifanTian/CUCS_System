@@ -5,7 +5,11 @@ const ProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
   },
-  company: {
+  Image: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Image' 
+  },
+  companys: {
     type: String
   },
   website: {
@@ -30,7 +34,7 @@ const ProfileSchema = new mongoose.Schema({
   },
   experience: [
     {
-       company: {
+       companys: {
         type: String
       },
       title: {

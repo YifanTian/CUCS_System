@@ -21,13 +21,16 @@ export const getCurrentProfile = () => async dispatch => {
 	// Get all profiles
   export const getProfiles = () => async dispatch => {
     dispatch({ type: CLEAR_PROFILE });
-  
+    console.log('inside get profile');
     try {
+      console.log('try get profile');
       const res = await axios.get('/api/profile');
-  
+      console.log('get profile');
+
       dispatch({
         type: GET_PROFILES,
         payload: res.data
+        // payload: {}
       });
     } catch (err) {
       dispatch({
@@ -41,7 +44,7 @@ export const getCurrentProfile = () => async dispatch => {
     export const getProfileById = userId => async dispatch => {
       try {
         const res = await axios.get(`/api/profile/user/${userId}`);
-    
+      
         dispatch({
           type: GET_PROFILE,
           payload: res.data

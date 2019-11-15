@@ -4,6 +4,8 @@ import Register from '../auth/Register';
 import Login from '../auth/Login';
 import Alert from '../layout/Alert';
 import Dashboard from '../dashboard/Dashboard';
+import PhotoBoardContainer from '../dashboard/PhotoBoardContainer'
+import UploadPhoto from '../UploadPhoto';
 import CreateProfile from '../profile-forms/CreateProfile';
 import EditProfile from '../profile-forms/EditProfile';
 import AddExperience from '../profile-forms/AddExperience';
@@ -22,6 +24,8 @@ const Routes = () => {
       <Alert />
       <Switch>
       <Route exact path='/' component={Landing} />
+        <Route exact path="/PhotoBoard" component={PhotoBoardContainer} />
+        <Route path="/uploadphoto" component={UploadPhoto} />
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/profiles' component={Profiles} />
