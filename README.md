@@ -10,10 +10,13 @@ https://young-reaches-22609.herokuapp.com/profiles
 clone项目后进入根目录
 
 npm install
+
 npm start
 
 cd client
+
 npm install
+
 npm start
 
 go to http://localhost:3000
