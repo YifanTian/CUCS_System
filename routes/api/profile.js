@@ -75,16 +75,14 @@ router.post(
       linkedin
     } = req.body;
 
-    img_data = fs.readFileSync(req.file.path);
-    img_contentType = req.file.mimetype;
-
     // Build profile object
     const profileFields = {};
     profileFields.user = req.user.id;
-    if (img_data) profileFields.img.data = img_data;
-    if (img_contentType) profileFields.img.contentType = img_contentType;
+    // if (img_data) profileFields.img.data = img_data;
+    // if (img_contentType) profileFields.img.contentType = img_contentType;
     if (companys) profileFields.companys = companys;
     if (website) profileFields.website = website;
+    profileFields.Image = {"_id": "5dce6c00b9e821dbe6c14d40"};
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
