@@ -7,6 +7,7 @@ import {getCurrentProfile, deleteAccount} from '../../actions/profile';
 import DashboardActions from './DashboardAction';
 import Experience from './Experience';
 import Education from './Education';
+import Photo from './Photo';
 
 const Dashboard = ({getCurrentProfile, deleteAccount ,auth:{user},profile: {profile, loading}}) => {
     useEffect(() => {getCurrentProfile();}, [getCurrentProfile]);
@@ -18,6 +19,8 @@ const Dashboard = ({getCurrentProfile, deleteAccount ,auth:{user},profile: {prof
         {profile !== null ? (
                     <Fragment>
                         <DashboardActions/>
+                        {/* <h4> {profile.status} </h4> */}
+                        {/* <Photo user_data={user.name}/> */}
                         <Experience experience = {profile.experience} />
                         <Education education ={profile.education}/>
                         

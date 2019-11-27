@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const util = require('util');
-const Image = require('../../models/images');
+const Image = require('../../models/Image');
 const fs = require('fs');
 
 // import express from 'express';

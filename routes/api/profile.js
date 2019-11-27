@@ -4,7 +4,7 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
-// const img = require('../../models/img');
+const Image = require('../../schema/Image');
 
 // @route    GET api/profile/me
 // @desc     Get current users profile
@@ -15,6 +15,7 @@ router.get('/me', auth, async (req, res) => {
       'user',
       ['name', 'avatar']
     );
+    console.log("Get current profile");
 
     if (!profile) {
       return res.status(400).json({ msg: 'There is no profile for this user' });
@@ -29,7 +30,7 @@ router.get('/me', auth, async (req, res) => {
 
 router.get('/getImages', function(req, res){
   Image.find({}, function(err, data) {
-    console.log("Get all images");
+    console.log("Get all images at profile");
     if (!err) res.send(data);
     else throw err;
   });
@@ -126,8 +127,19 @@ router.get('/', async (req, res) => {
     // const profiles = await Profile.find().populate('user', ['name', 'avatar','username']);
     // const profiles = await Profile.find().populate('user', ['name', 'avatar']).populate('img', ['data', 'contentType']);
     // const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    const images = await Image.find();
     const profiles = await Profile.find().populate('Image', ['userName','img']).populate('user', ['name', 'avatar']);
-    console.log(profiles);
+
+    var dict = new Object();
+    for(const i of Array(images.length).keys()) {
+      dict[images[i].userName] = images[i]
+    }
+
+    for(const i of Array(profiles.length).keys()) {
+      if (profiles[i].user._id in dict) {
+        profiles[i].Image = dict[profiles[i].user._id]
+      } 
+    }
 
     res.json(profiles);
   } catch (err) {

@@ -10,7 +10,8 @@ const imageSchema = new Schema({
     info: String,
     time: String,
     img: {data: Buffer, contentType: String },
+    userid: String,
     comments: Array,
 });
 
-module.exports = mongoose.model('Image', imageSchema, 'upload-file');
+module.exports = Image = mongoose.model('Image', imageSchema, 'upload-file');

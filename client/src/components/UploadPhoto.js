@@ -7,6 +7,7 @@ import {FlatButton, Paper, TextField, Divider} from 'material-ui';
 import FileUpload from 'material-ui/svg-icons/file/file-upload';
 import TextEditorField from './TextEditorField';
 import { getPhotoCount, uploadPhotoAction } from '../actions/index';
+import { getCurrentProfile } from "../actions/profile";
 import '../index.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -77,13 +78,14 @@ class UploadPhoto extends Component {
   constructor(props) {
      super(props);
      this.props.getPhotoCount();
+     this.props.getCurrentProfile();
    }
 
    submit = (values) => {
      console.log(this.props);
      console.log(values);
      let userName = localStorage.userName;
-     this.props.uploadPhotoAction(values, userName, this.props.photoCount, this.props.history);
+     this.props.uploadPhotoAction(values, this.props.profile.user._id, this.props.photoCount,  this.props.profile, this.props.history);
    }
 
    render() {
@@ -93,6 +95,8 @@ class UploadPhoto extends Component {
     } = this.props;
     return (
       <MuiThemeProvider>
+        {/* <h4> {this.props.profile.user.id}</h4> */}
+        {/* <h4> {this.props.photoCount} </h4> */}
      <form onSubmit={handleSubmit(this.submit)} style={styles.form}>
        <div>
          <Field
@@ -106,10 +110,12 @@ class UploadPhoto extends Component {
            component={renderTextField}
            type="text"
            placeholder="imageTitle"
+          //  defaultValue={this.props.profile.status}
          />
          <Divider/>
          <Field
            name="text"
+          //  value={this.props.profile.status}
            component={TextEditorField}
            type="text"
          />
@@ -150,6 +156,7 @@ class UploadPhoto extends Component {
     console.log(state);
     return {
       photoCount:state.board.photoCount,
+      profile: state.profile.profile,
       uploadImage: state.board.uploadImage
     }
   }
@@ -158,5 +165,5 @@ class UploadPhoto extends Component {
     form: 'uploadphoto'
   })(UploadPhoto);
   
-  export default connect(mapStateToProps, {getPhotoCount, uploadPhotoAction})(reduxFormUploadPhoto);
+  export default connect(mapStateToProps, {getPhotoCount, getCurrentProfile, uploadPhotoAction})(reduxFormUploadPhoto);
   

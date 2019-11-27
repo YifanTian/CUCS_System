@@ -7,7 +7,7 @@ const util = require('util');
 // const AuthenticationController = require('./../controllers/authentication');
 // const passportService = require('./../config/passport');
 // const passport = require('passport');
-const Image = require('../schema/images')
+const Image = require('../schema/Image')
 // Middleware to require login/auth
 // const requireAuth = passport.authenticate('jwt', { session: false });
 // const requireLogin = passport.authenticate('local', { session: false });
