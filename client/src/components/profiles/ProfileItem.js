@@ -21,9 +21,11 @@ const ProfileItem = ({
     status,
     company,
     location,
-    skills
+    skills,
+    education
   }
 }) => {
+  console.log(education)
   return (
     <div className='profile bg-light'>
       {/* <img src={avatar} alt='' className='round-img' /> */}
@@ -45,6 +47,7 @@ const ProfileItem = ({
           </li>
         ))}
       </ul>
+      {education.length > 0 ? (<p>{`School:${education[0].school}; Degree:${education[0].degree}; Field:${education[0].fieldofstudy}`}</p>) : null}
     </div>
   );
 };
