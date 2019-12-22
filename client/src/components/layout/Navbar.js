@@ -7,6 +7,10 @@ import PropTypes from 'prop-types';
 const Navbar = ({auth: {isAuthenticated, loading} , logout}) => {
   const authLinks = (
     <ul>
+      <li><Link to='/AboutUs'>
+          AboutUs
+        </Link>
+      </li>
       <li><Link to='/profiles'>
           Developers
         </Link>
@@ -30,6 +34,7 @@ const Navbar = ({auth: {isAuthenticated, loading} , logout}) => {
   );
   const guestLinks = (
     <ul>
+      <li><Link to='/AboutUs'>AboutUs</Link></li>
       <li><Link to='/profiles'>Developers</Link></li>
       <li><Link to='/register'>Register</Link></li>
       <li><Link to='/login'>Login</Link></li>
